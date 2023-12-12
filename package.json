@@ -1,0 +1,25 @@
+{
+  "name": "mern-auth",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "dev": "nodemon api/index",
+    "start": "node api/index"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mdakashsheikh/mern-auth.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/mdakashsheikh/mern-auth/issues"
+  },
+  "homepage": "https://github.com/mdakashsheikh/mern-auth#readme",
+  "dependencies": {
+    "express": "^4.18.2",
+    "nodemon": "^3.0.2"
+  }
+}
