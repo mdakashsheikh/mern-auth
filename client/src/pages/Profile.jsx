@@ -9,7 +9,9 @@ export default function Profile() {
     const [image, setImage] = useState(undefined);
     const [imagePercent, setImagePercent] = useState(0);
     const [imageError, setImageError] = useState(false);
-    const [formData, setFormData] = useState({})
+    const [formData, setFormData] = useState({});
+
+    console.log(formData)
 
     const {currentUser} = useSelector((state) => state.user);
    
@@ -19,7 +21,7 @@ export default function Profile() {
         }
     }, [image])
 
-    const handleFileUpload = async (image) => {
+    const handleFileUpload =async (image) => {
         const storage = getStorage(app);
         const fileName = new Date().getTime() + image.name;
         const storageRef = ref(storage, fileName);
@@ -31,19 +33,18 @@ export default function Profile() {
         (error) => {
             setImageError(true);
         },
-        () => {
-            getDownloadURL(uploadTask.snapshot.ref)
-            .then((downloadURL) => {
-                setFormData({ ...formData, profilePicture: downloadURL})
-            })
-        }
+        (() => {
+            console.log('Outer Ok')
+            getDownloadURL(uploadTask.snapshot.ref).then((downloadURL) => setFormData({...formData, profilePicture: downloadURL}))
+            console.log('Nai')
+        })()
     };
 
     return (
         <div className='p-3 max-w-lg mx-auto'>
             <h1 className='text-3xl font-semibold text-center my-7'>Profile</h1>
             <form className='flex flex-col gap-4'>
-                <input type='file' ref={fileRef} accept='image/*' hidden onChange={(e) => setImage(e.target.files[0])}/>
+                <input type='file' accept='image/*' ref={fileRef} hidden onChange={(e) => setImage(e.target.files[0])}/>
 
                 {/* 
                 Firebase Storage Rules:
@@ -52,7 +53,7 @@ export default function Profile() {
                 request.resource.size < 2 * 1024 * 1024 && 
                 request.resource.contentType.matches('image/.*') */}
                 <img 
-                    src={currentUser.profilePicture} 
+                    src={formData.profilePicture || currentUser.profilePicture} 
                     alt='profile' 
                     className='h-24 w-24 self-center cursor-pointer rounded-full object-cover'
                     onClick={() => fileRef.current.click()}
