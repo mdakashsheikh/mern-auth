@@ -5,12 +5,9 @@ import { useDispatch } from 'react-redux';
 import { signInSuccess } from '../redux/user/userSlice';
  
 export default function OAuth() {
-    console.log('Not Ok')
     const dispatch = useDispatch();
 
     const handleClick = async() => {
-
-        console.log('OK')
 
         try {
             const provider = new GoogleAuthProvider();
